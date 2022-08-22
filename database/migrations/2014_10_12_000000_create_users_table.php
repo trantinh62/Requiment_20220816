@@ -16,12 +16,16 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email', 255)->unique();
-            $table->string('password', 255);
-            $table->string('first_name', 255);
-            $table->string('last_name', 255);
-            $table->string('token_reset_password', 255);
-             $table->tinyInteger('role_id');
-            $table->string('status');
+            $table->string('password', 255)->nullable();
+            $table->string('first_name', 255)->nullable();
+            $table->string('last_name', 255)->nullable();
+            $table->integer('age')->nullable();
+            $table->string('address', 255)->nullable();
+            $table->integer('phone')->nullable();
+            $table->string('token_reset_password', 60)->nullable();
+            $table->string('token_register', 60)->nullable();
+            $table->tinyInteger('role_id')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
