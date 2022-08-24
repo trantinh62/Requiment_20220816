@@ -6,28 +6,38 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
-      dd(123);
-    }
-    public function login(Request $request)
-    {
-        if (!Auth::attempt($request->only('email','password')))
-        {
-            return response()->json([
-                'message' => 'Unauthorized1111'
-            ], 401);
-        }
-        $user = User::where('email', $request['email'])->firstOrFail();
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $key = 'example_key';
+        JWT::decode($request['token'], new Key($key, 'HS256'));
+        dd('a');
 
-        return response()->json([
-            'mesage' => 'Hi ' . $user->first_name . ', welcome to home',
-            'access_token' => $token,
-            'token_type'=>'bearer',
-        ]);
+        
+    }
+
+
+    public static function generateJwt(){
+        $key = 'example_key';
+        $now_seconds = time();
+        $payload = [
+            'username' => 'abc',
+            'aud' => 'http://example.com',
+            'iat' => $now_seconds,
+            "exp" => $now_seconds + 50,
+        ];
+
+        /**
+         * IMPORTANT:
+         * You must specify supported algorithms for your application. See
+         * https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
+         * for a list of spec-compliant algorithms.
+         */
+        $jwt = JWT::encode($payload, $key, 'HS256');
+        return $jwt;
     }
 }

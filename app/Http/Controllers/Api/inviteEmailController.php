@@ -9,7 +9,7 @@ use App\Mail\MailNotify;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InviteEmailRequest;
-
+use App\Http\Controllers\Api\AuthController;
 
 
 
@@ -18,8 +18,7 @@ class inviteEmailController extends Controller
     public function sendEmail(InviteEmailRequest $request)
     {
         $data = $request->all();
-        $data['token_register'] = Str::random(20);
-        // dd($data);
+        $data['token'] = AuthController::generateJwt();
         try {
             $user = User::create($data);
             Mail::to($data['email'])->send(new MailNotify($data));

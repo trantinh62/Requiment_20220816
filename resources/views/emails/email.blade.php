@@ -6,7 +6,7 @@
 <body>
  
  <h1>Link Register account</h1>
- <p>link Register : {{route('register', $data['token_register'])}}</p> -->
+ <p>link Register : {{route('register')}}?token={{$data['token']}}</p> -->
  
 </body>
 </html> 

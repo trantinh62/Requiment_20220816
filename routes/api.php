@@ -21,8 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::controller(AuthController::class)->group(function () {
     Route::post('invite', 'invite');
-    Route::get('register/{token}', 'register')->name('register');
+    Route::post('register', 'register')->name('register');
     Route::post('login', 'login');
+    Route::post('demojwt', 'generateJwt');
 });
 Route::controller(inviteEmailController::class)->group(function () {
     Route::post('invite', 'sendEmail');
