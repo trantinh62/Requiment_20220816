@@ -21,10 +21,11 @@ return new class extends Migration
             $table->string('last_name', 255)->nullable();
             $table->integer('age')->nullable();
             $table->string('address', 255)->nullable();
-            $table->integer('phone')->nullable();
+            $table->string('phone')->nullable();
             $table->tinyInteger('role_id')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

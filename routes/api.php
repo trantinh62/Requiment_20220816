@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\inviteEmailController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\api\InviteEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +22,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::controller(AuthController::class)->group(function () {
     Route::post('invite', 'invite');
-    Route::post('register', 'register')->name('register');
+    Route::get('register', 'getLink');
+    Route::put('register', 'register')->name('register');
+
     Route::post('login', 'login');
-    Route::post('demojwt', 'generateJwt');
+    Route::post('jwt', 'generateJwt');
 });
-Route::controller(inviteEmailController::class)->group(function () {
+Route::controller(InviteEmailController::class)->group(function () {
     Route::post('invite', 'sendEmail');
+});
+Route::middleware('auth:sanctum')->group(function(){
+    Route::prefix('user')->controller(UserController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::put('/update', 'updateMaProfile');
+    });
 });
