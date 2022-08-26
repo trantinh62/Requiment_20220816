@@ -31,6 +31,7 @@ class AuthController extends Controller
             "exp" => $now_seconds + 604800,
         ];
         $jwt = JWT::encode($payload, $key, 'HS256');
+        
         return $jwt;
     }
 
@@ -62,7 +63,7 @@ class AuthController extends Controller
     {
         if (!Auth::attempt($request->only('email','password')))
         {
-            return response()->apiError('Unauthorized');
+            return response()->apiError('Account or password is not precision');
         }
         $user = User::where('email', $request['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;

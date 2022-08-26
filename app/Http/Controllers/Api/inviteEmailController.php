@@ -18,7 +18,7 @@ class InviteEmailController extends Controller
             $user = User::create($data);
             Mail::to($data['email'])->send(new MailNotify($data));     
         } catch (Exception $e) {
-            return response()->apiError('Gửi mail không thành công');
+            return response()->apiError('Email sending failed');
         }
 
         return response()->apiSuccess($user);
