@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\CkeckpointController;
 use App\Http\Controllers\api\InviteEmailController;
 
 /*
@@ -21,7 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::controller(AuthController::class)->group(function () {
-    Route::post('invite', 'invite');
     Route::get('register', 'getLink');
     Route::put('register', 'register')->name('register');
     Route::post('login', 'login');
@@ -34,5 +34,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('profile')->controller(ProfileController::class)->group(function () {
         Route::get('/', 'index');
         Route::put('/update', 'update');
+        Route::put('/change_password', 'changePassword');
+        
+    });
+    Route::prefix('checkpoint')->controller(CkeckpointController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('/create', 'createCkeckpoint');
+
     });
 });

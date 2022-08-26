@@ -29,7 +29,7 @@ class RegisterByEmailRequest extends FormRequest
             'first_name' => 'required|alpha|min:1|max:20',
             'last_name' => 'required|alpha|min:1|max:20',
             'phone' =>  'required|numeric|digits:10',
-            'address' => 'required|alpha|min:1|max:80',
+            'address' => 'required|min:1|max:80',
         ];
     }
 }

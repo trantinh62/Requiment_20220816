@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Checkpoint;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -56,5 +57,9 @@ class User extends Authenticatable
         return Attribute::make(
             set: fn ($value) => bcrypt($value)
         );
+    }
+    public function checkpoints()
+    {
+        return $this->hasMany(Checkpoint::class, 'user_id', 'id');
     }
 }
