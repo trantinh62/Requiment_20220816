@@ -19,7 +19,9 @@ class CkeckpointController extends Controller
     {
         $data = $request->all();
         $checkpoint = Checkpoint::create($data);
-        dd($checkpoint);
+        
+        return response()->apiSuccess($checkpoint);
+        
 
     }
 }

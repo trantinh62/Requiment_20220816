@@ -29,13 +29,14 @@ Route::controller(AuthController::class)->group(function () {
 });
 Route::controller(InviteEmailController::class)->group(function () {
     Route::post('invite', 'sendEmail');
+    Route::post('inviteResetPassword', 'sendMailPassword');
 });
 Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('profile')->controller(ProfileController::class)->group(function () {
         Route::get('/', 'index');
         Route::put('/update', 'update');
         Route::put('/change_password', 'changePassword');
-        
+        Route::post('/logout', 'logout');
     });
     Route::prefix('checkpoint')->controller(CkeckpointController::class)->group(function () {
         Route::get('/', 'index');

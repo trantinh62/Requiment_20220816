@@ -49,4 +49,11 @@ class ProfileController extends Controller
         return response()->apiSuccess($profile);
     }
 
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        return response()->apiSuccess(null);
+    }
+
 }
