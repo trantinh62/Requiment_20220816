@@ -16,6 +16,13 @@ class Checkpoint extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'period',
+        'start_date',
+        'end_date',
     ];
+
+    
+    public function assign()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

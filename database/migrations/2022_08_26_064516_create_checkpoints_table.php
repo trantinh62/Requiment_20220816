@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('name', 255)->unique();
-            $table->string('period', 255)->unique();
+            $table->string('name', 255);
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
             $table->timestamps();
             $table->softDeletes();
         });

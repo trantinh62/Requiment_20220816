@@ -36,9 +36,9 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        Response::macro('apiError', function ($message, $errors = [], $statusCode = 401, $code = HttpResponse::HTTP_BAD_REQUEST) {
+        Response::macro('apiError', function ($message, $errors = [], $code = HttpResponse::HTTP_BAD_REQUEST) {
             return response()->json([
-                'status' => $statusCode,
+                'status' => false,
                 'message' => $message,
                 'errors' => $errors,
             ])->setStatusCode($code);

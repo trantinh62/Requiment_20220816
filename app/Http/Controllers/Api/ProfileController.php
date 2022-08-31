@@ -14,8 +14,12 @@ class ProfileController extends Controller
 {
     public function index()
     {
+        $user = user::whereNotNull('password')->get();
+        return response()->apiSuccess($user);
+    }
+    public function detail()
+    {
         $user = User::find(Auth::id())->toArray();
-        
         return response()->apiSuccess($user);
     }
 

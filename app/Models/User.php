@@ -14,6 +14,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const LEVEL_GROUP_LEADER = 1;
+    public const DISABLE = 'disable';
+
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -60,6 +65,11 @@ class User extends Authenticatable
     }
     public function checkpoints()
     {
-        return $this->hasMany(Checkpoint::class, 'user_id', 'id');
+        return $this->hasMany(Checkpoint::class);
     }
+    // public function reivew()
+    // {
+    //     return $this->reivew(Checkpoint::class);
+    // }
+    
 }

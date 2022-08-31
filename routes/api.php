@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\CkeckpointController;
 use App\Http\Controllers\api\InviteEmailController;
@@ -22,25 +23,36 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::controller(AuthController::class)->group(function () {
+    Route::post('jwt', 'setTokenEmailRegister');
     Route::get('register', 'getLink');
     Route::put('register', 'register')->name('register');
+    //Api reset password
+    Route::get('reset_password', 'getIndexResetPassword');
+    Route::put('reset_password', 'getUpdateResetPassword')->name('resetPassword');
     Route::post('login', 'login');
-    Route::post('jwt', 'generateJwt');
 });
 Route::controller(InviteEmailController::class)->group(function () {
     Route::post('invite', 'sendEmail');
-    Route::post('inviteResetPassword', 'sendMailPassword');
+    //invite send maail reset password
+    Route::post('invite_reset_password', 'sendMailPassword');
 });
 Route::middleware('auth:sanctum')->group(function(){
-    Route::prefix('profile')->controller(ProfileController::class)->group(function () {
+    Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         Route::get('/', 'index');
-        Route::put('/update', 'update');
+        Route::get('/detail', 'detail');
+        Route::put('/', 'update');
         Route::put('/change_password', 'changePassword');
         Route::post('/logout', 'logout');
     });
-    Route::prefix('checkpoint')->controller(CkeckpointController::class)->group(function () {
+    Route::controller(CkeckpointController::class)->prefix('checkpoint')->group(function () {
         Route::get('/', 'index');
-        Route::post('/create', 'createCkeckpoint');
+        Route::post('/', 'store');
+        Route::get('/{id}', 'show');
+    });
+    Route::controller(ReviewController::class)->prefix('review')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/{checkpoint}', 'show');
 
     });
 });
