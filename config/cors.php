@@ -21,8 +21,11 @@ return [
 
     'allowed_origins' => [
         'http://localhost:3000',
-        'http://10.20.23.45:3000/',
+        'http://10.20.23.45:3000',
+        'https://4f5c-14-241-131-38.ap.ngrok.io',
+        'https://8df0-118-69-61-80.ap.ngrok.io'
     ],
+
 
     'allowed_origins_patterns' => [],
 
@@ -32,6 +35,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];

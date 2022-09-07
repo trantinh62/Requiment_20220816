@@ -9,7 +9,7 @@ class Kernel extends ConsoleKernel
 {
 
     protected $commands = [
-        Commands\InactiveUsers::class,
+        Commands\InactiveUser::class,
     ];
     /**
      * Define the application's command schedule.

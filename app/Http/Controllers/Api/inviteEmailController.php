@@ -36,6 +36,13 @@ class InviteEmailController extends Controller
     {
         $data = $request->all();
         $user = User::where('email',$request['email'])->first();
+        $disable = User::where('email', $request['email'])->where('status', 'disable')->first();
+        if($disable){
+            return response()->json([
+                'status' => 403,
+                'message' => 'tài khoản đã bị khóa',
+            ],403);
+        }
         if ($user) {
             $data['token'] = AuthController::setTokenJwtResetPassword($data['email']);
             Mail::to($data['email'])->send(new MailResetPassword($data));
