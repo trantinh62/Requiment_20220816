@@ -36,7 +36,7 @@ class ReviewController extends Controller
         return response()->apiSuccess($user);
     }
 
-    public function createReview(Request $request,)
+    public function createReviewPoint(Request $request)
     {
         $data = $request->all();
         $review = Review::where('id',$request['id'])->where('review_id',Auth::id())->first();
