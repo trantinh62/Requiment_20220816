@@ -52,7 +52,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::controller(ReviewController::class)->prefix('review')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::get('/{checkpoint}', 'show');
-
+        Route::get('/list-review', 'reviewListAssign');
+        Route::put('/{id}', 'createReviewPoint');
     });
 });
