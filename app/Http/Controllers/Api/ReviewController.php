@@ -42,7 +42,7 @@ class ReviewController extends Controller
         $review = Review::where('id',$request['id'])->where('review_id',Auth::id())->first();
         if ($review) {
             try {
-                if (Review::where('attitude',null)->first()) {
+                if (!isset($review->attitude)) {
                     $review->update($data);
                 } else {
                     return response()->apiError('Bạn đã Review cho ID này');

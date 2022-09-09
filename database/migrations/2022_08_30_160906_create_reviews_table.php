@@ -26,8 +26,8 @@ return new class extends Migration
             $table->integer('teamwork')->nullable();
             $table->integer('training')->nullable();
             $table->integer('adhere')->nullable();
-            $table->integer('strength')->nullable();
-            $table->integer('weakness')->nullable();
+            $table->string('strength')->nullable();
+            $table->string('weakness')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

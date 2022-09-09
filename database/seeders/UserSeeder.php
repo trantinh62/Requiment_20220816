@@ -18,6 +18,14 @@ class UserSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(10)->create();
+        // \App\Models\User::create([
+        //         'first_name' => 'trần',
+        //         'last_name' => 'tình',
+        //         'email' => 'tinhkien@gmail.com',
+        //         'password' => Hash::make('123123123'),
+        //         'role_id' => 1
+        //     ]);
+
 
 
 
