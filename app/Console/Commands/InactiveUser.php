@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Console\Command;
 use App\Notifications\NotifyInactiveUser;
 
-class inactiveUsers extends Command
+class InactiveUser extends Command
 {
 
     protected $signature = 'email:inactiveUsers';

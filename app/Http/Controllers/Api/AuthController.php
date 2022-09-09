@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Carbon\Carbon;
 use App\Models\User;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -104,6 +103,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $enable = User::where('email', $request['email'])->where('status', 'enable')->first();
+        $disable = User::where('email', $request['email'])->where('status', 'disable')->first();
         if ($enable) {
             if (!Auth::attempt($request->only('email','password')))
             {
@@ -113,13 +113,13 @@ class AuthController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
             $user['token'] = $token;
             return response()->apiSuccess($user);
-        } else {
+        }
+        if($disable){
             return response()->json([
                 'status' => 403,
                 'message' => 'tài khoản đã bị khóa',
             ],403);
         }
+        return response()->apiError('tài khoản mật khẩu không chính xác');
     }
-
-
 }

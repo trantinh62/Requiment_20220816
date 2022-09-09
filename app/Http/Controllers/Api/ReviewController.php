@@ -11,8 +11,6 @@ class ReviewController extends Controller
 {
     public function store(Request $request)
     {
-        // $this->authorize('create', User::class);
-
         $arr = [];
         $data = $request->all();
         foreach($data['review_id'] as $value) {
@@ -32,8 +30,6 @@ class ReviewController extends Controller
         $checkpoint->assign;
         
         return response()->apiSuccess($checkpoint);
-
-
     }
 }
 
