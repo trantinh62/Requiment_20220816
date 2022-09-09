@@ -27,4 +27,13 @@ class Review extends Model
         'weakness',
     ];
 
+    public function nameCheckpoint()
+    {
+        return $this->belongsTo(Checkpoint::class, 'checkpoint_id', 'id');
+    }
+    public function demo()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 }

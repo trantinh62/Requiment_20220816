@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Review;
 use App\Models\Checkpoint;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -22,14 +24,38 @@ class ReviewController extends Controller
             $arr[] = $review;
         }
         return response()->apiSuccess($arr);
-
     }
 
-    public function show(Checkpoint $checkpoint)
+    public function reviewListAssign()
     {
-        $checkpoint->assign;
-        
-        return response()->apiSuccess($checkpoint);
+        // $user = User::with(['assignReview' => function ($query) {
+        //     $query->with('nameCheckpoint');
+        // }])->find(Auth::id());
+        $user = User::with('assignReview.nameCheckpoint')->find(Auth::id());
+
+        return response()->apiSuccess($user);
+    }
+
+    public function createReview(Request $request,)
+    {
+        $data = $request->all();
+        $review = Review::where('id',$request['id'])->where('review_id',Auth::id())->first();
+        if ($review) {
+            try {
+                if (Review::where('attitude',null)->first()) {
+                    $review->update($data);
+                } else {
+                    return response()->apiError('Bạn đã Review cho ID này');
+                }
+    
+                return response()->apiSuccess($review);
+     
+            } catch (Exception $e) {
+                return response()->apiError('lỗi');
+            }
+        }else {
+            return response()->apiError('bạn không có quyền Review ID này');
+        }
     }
 }
 

@@ -67,9 +67,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Checkpoint::class);
     }
-    // public function reivew()
-    // {
-    //     return $this->reivew(Checkpoint::class);
-    // }
-    
+    public function review()
+    {
+        return $this->hasMany(Review::class);
+    }
+    public function assignReview()
+    {
+        return $this->hasMany(Review::class, 'review_id', 'id' );
+    }
 }
