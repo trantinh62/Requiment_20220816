@@ -60,4 +60,26 @@ class ProfileController extends Controller
         return response()->apiSuccess(null);
     }
 
+    public function updateMany(Request $request)
+    {
+        try {
+            if ($request['data'] && !empty($request['data'])) {
+                foreach($request['data'] as $dt) {
+                    $dataUpdate = [];
+                    if (isset($dt['status'])) {
+                        $dataUpdate['status'] = $dt['status'];
+                    }
+                    if (isset($dt['role_id'])) {
+                        $dataUpdate['role_id'] = $dt['role_id'];
+                    }
+                    User::where('id', $dt['id'])->update($dataUpdate);
+                }
+            }
+            
+            return response()->apiSuccess(true);
+        } catch (\Exception $e) {
+            return response()->apiSuccess(false);
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -40,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         Route::get('/', 'index');
         Route::get('/detail', 'detail');
+        Route::put('/many', 'updateMany');
         Route::put('/', 'update');
         Route::put('/change_password', 'changePassword');
         Route::post('/logout', 'logout');
@@ -47,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::controller(CkeckpointController::class)->prefix('checkpoint')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
+        Route::get('/all', 'groupCheckpoint');
         Route::get('/{id}', 'show');
     });
     Route::controller(ReviewController::class)->prefix('review')->group(function () {
@@ -54,5 +57,9 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/', 'store');
         Route::get('/list-review', 'reviewListAssign');
         Route::put('/{id}', 'createReviewPoint');
+        Route::get('/{checkpoint_id}/user', 'getUserByCheckpoint');
+        Route::get('/{checkpoint_id}/all', 'getReview');
+        Route::get('/{checkpoint_id}/{user_id}/', 'checkListAssgin');
     });
 });
+

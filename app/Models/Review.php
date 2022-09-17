@@ -35,5 +35,13 @@ class Review extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    public function userInfo()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id' );
+    }
+    public function reviewInfo()
+    {
+        return $this->belongsTo(User::class, 'review_id', 'id' );
+    }
 
 }
