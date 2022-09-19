@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Review;
 use App\Models\Checkpoint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CkeckpointController extends Controller
 {
@@ -37,15 +38,22 @@ class CkeckpointController extends Controller
 
     public function groupCheckpoint()
     {
-        $checkpoints = DB::table('reviews', 'reviews')
-            ->join('checkpoints', 'checkpoints.id', '=', 'reviews.checkpoint_id')
-            ->where('reviews.user_id', Auth::user()->id)
-            ->select([
-                'reviews.checkpoint_id',
-                'checkpoints.*'
-            ])
-            ->groupBy('reviews.checkpoint_id')
-            ->get();
+        // $checkpoints = DB::table('reviews', 'reviews')
+        //     ->join('checkpoints', 'checkpoints.id', '=', 'reviews.checkpoint_id') 
+        //     ->where('reviews.user_id', Auth::user()->id)
+        //     ->select([
+        //         'reviews.checkpoint_id',
+        //         'checkpoints.*'
+        //     ])
+        //     ->groupBy('reviews.checkpoint_id')
+        //     ->get();
+        // return response()->apiSuccess($checkpoints);
+
+
+        $checkpoints = Review::with('nameCheckpoint')->where('user_id', Auth::user()->id)
+            ->groupBy('checkpoint_id') 
+            ->select('checkpoint_id')->get();
         return response()->apiSuccess($checkpoints);
+
     }
 }
