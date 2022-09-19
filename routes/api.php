@@ -59,6 +59,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::put('/{id}', 'createReviewPoint');
         Route::get('/{checkpoint_id}/user', 'getUserByCheckpoint');
         Route::get('/{checkpoint_id}/all', 'getReview');
+        Route::get('/all-checkpoint-assgin', 'getCheckpointassgin');
         Route::get('/{checkpoint_id}/{user_id}/', 'checkListAssgin');
     });
 });
