@@ -15,6 +15,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public const LEVEL_GROUP_LEADER = 1;
+    public const LEVEL_LEADER = 2;
     public const DISABLE = 'disable';
 
 

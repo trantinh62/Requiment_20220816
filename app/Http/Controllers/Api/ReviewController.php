@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\AvgCheckpoint;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Checkpoint;
 use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
@@ -16,7 +17,7 @@ class ReviewController extends Controller
     {
         $arr = [];
         $data = $request->all();
-        foreach($data['review_id'] as $value) {
+        foreach ($data['review_id'] as $value) {
             $review = Review::create([
                 'checkpoint_id' => $data['checkpoint_id'],
                 'user_id' => $data['user_id'],
@@ -27,7 +28,7 @@ class ReviewController extends Controller
         return response()->apiSuccess($arr);
     }
 
-    public function reviewListAssign(Request $request )
+    public function reviewListAssign(Request $request)
     {
         if ($request->boolean(('useUserId'))) {
             $user = User::with(['userReview.nameCheckpoint', 'userReview.userInfo', 'userReview.reviewInfo'])->find(Auth::id());
@@ -87,21 +88,21 @@ class ReviewController extends Controller
                     $groupLeaderTeamwork += $el->teamwork;
                     $groupLeaderTraining += $el->training;
                     $groupLeaderAdhere += $el->adhere;
-                    $groupLeaderCount ++;
+                    $groupLeaderCount++;
                 } else if ($el->reviewInfo->role_id == 2) {
                     $leaderAttitude += $el->attitude;
                     $leaderPerformance += $el->performance;
                     $leaderTeamwork += $el->teamwork;
                     $leaderTraining += $el->training;
                     $leaderAdhere += $el->adhere;
-                    $leaderCount ++;
+                    $leaderCount++;
                 } else if ($el->reviewInfo->role_id == 3) {
                     $memberAttitude += $el->attitude;
                     $memberPerformance += $el->performance;
                     $memberTeamwork += $el->teamwork;
                     $memberTraining += $el->training;
                     $memberAdhere += $el->adhere;
-                    $memberCount ++;
+                    $memberCount++;
                 }
             }
             //Attitude
@@ -120,12 +121,10 @@ class ReviewController extends Controller
             $groupLeaderTrainingAVG = $this->avgCal($groupLeaderTraining, $groupLeaderCount, 1);
             $leaderTrainingAVG = $this->avgCal($leaderTraining, $leaderCount, 2);
             $memberTrainingAVG = $this->avgCal($memberTraining, $memberCount, 3);
-
             // Adhere
             $groupLeaderAdhereAVG = $this->avgCal($groupLeaderAdhere, $groupLeaderCount, 1);
             $leaderAdhereAVG = $this->avgCal($leaderAdhere, $leaderCount, 2);
             $memberAdhereAVG = $this->avgCal($memberAdhere, $memberCount, 3);
-
             $sumAttitude = $this->sumAvgCal($groupLeaderAttitudeAVG, $leaderAttitudeAVG, $memberAttitudeAVG);
             $sumPerformance = $this->sumAvgCal($groupLeaderPerformanceAVG, $leaderPerformanceAVG, $memberPerformanceAVG);
             $sumTeamwork = $this->sumAvgCal($groupLeaderTeamworkAVG, $leaderTeamworkAVG, $memberTeamworkAVG);
@@ -139,27 +138,26 @@ class ReviewController extends Controller
                 'avg_teamwork' => round($sumTeamwork),
                 'avg_training' => round($sumTraining),
                 'avg_adhere' => round($sumAdhere),
-            ]);    
+            ]);
         }
 
         return response()->apiSuccess($review);
-
     }
 
     public function checkListAssgin(Request $request)
     {
-        $review = Review::where('checkpoint_id', $request['checkpoint_id'])->where('user_id', $request['user_id'] )->get();
+        $review = Review::where('checkpoint_id', $request['checkpoint_id'])->where('user_id', $request['user_id'])->get();
         return $review;
     }
 
     public function getReview(Request $request)
     {
-        $review = Review::where('checkpoint_id', $request['checkpoint_id'])->where('user_id', Auth::user()->id )->get();
+        $review = Review::where('checkpoint_id', $request['checkpoint_id'])->where('user_id', Auth::user()->id)->get();
         return $review;
     }
     public function getCheckpointassgin(Request $request)
     {
-        $review = Review::where('review_id', Auth::user()->id )->get();
+        $review = Review::where('review_id', Auth::user()->id)->get();
         return $review;
     }
 
@@ -182,8 +180,8 @@ class ReviewController extends Controller
     protected function hasReviewComplete(Request $request)
     {
         $checkReviewIsNull = Review::where('checkpoint_id', $request['checkpoint_id'])
-        ->where('user_id', $request['user_id'])
-        ->where('attitude', null)->first();
+            ->where('user_id', $request['user_id'])
+            ->where('attitude', null)->first();
         return $checkReviewIsNull;
     }
     protected function avgCal($point, $count, $role)

@@ -17,7 +17,7 @@ class CheckpointPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->role_id == User::LEVEL_GROUP_LEADER || $user->role_id == User::LEVEL_LEADER;
     }
 
     /**

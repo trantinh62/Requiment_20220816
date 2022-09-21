@@ -20,9 +20,13 @@ class Checkpoint extends Model
         'end_date',
     ];
 
-    
     public function assign()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function avgCheckpointinfo()
+    {
+        return $this->hasMany(AvgCheckpoint::class);
     }
 }

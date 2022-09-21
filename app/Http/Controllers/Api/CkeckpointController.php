@@ -28,7 +28,7 @@ class CkeckpointController extends Controller
         $this->authorize('create', User::class);
         $data = $request->all();
         $checkpoint = Checkpoint::create($data);
-        
+
         return response()->apiSuccess($checkpoint);
     }
     public function show(Checkpoint $id)
@@ -51,9 +51,36 @@ class CkeckpointController extends Controller
 
 
         $checkpoints = Review::with('nameCheckpoint')->where('user_id', Auth::user()->id)
-            ->groupBy('checkpoint_id') 
+            ->groupBy('checkpoint_id')
             ->select('checkpoint_id')->get();
         return response()->apiSuccess($checkpoints);
+    }
+    public function getCheckpointAllReviewId()
+    {
+        $checkpoints = Review::with('nameCheckpoint')->where('review_id', Auth::user()->id)
+            ->groupBy('checkpoint_id')
+            ->select('checkpoint_id')->get();
+        return response()->apiSuccess($checkpoints);
+    }
 
+    public function getHistoryCheckpoint360(Request $request,)
+    {
+        if (Auth::user()->role_id == 1) {
+            $data = Checkpoint::with('assign')->where('id', $request['id'])->get();
+            
+            return $data;
+        } else if (Auth::user()->role_id == 2) {
+            $data = Checkpoint::with(['assign' => function ($query) {
+                $query->where('review_id', Auth::user()->id);
+            }])->where('id', $request['id'])->get();
+
+            return $data;
+        } else {
+            $data = Checkpoint::with(['assign' => function ($query) {
+                $query->where('user_id', Auth::user()->id);
+            }])->where('id', $request['id'])->get();
+
+            return response()->apiSuccess($data);
+        }
     }
 }
