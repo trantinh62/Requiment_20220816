@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\CkeckpointController;
 use App\Http\Controllers\api\InviteEmailController;
+use App\Http\Controllers\Api\AvgCheckpointController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,10 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::get('/all', 'groupCheckpoint');
+        Route::get('/all-reivew-id', 'getCheckpointAllReviewId');
         Route::get('/{id}', 'show');
+        Route::get('/history/{id}', 'getHistoryCheckpoint360');
+
     });
     Route::controller(ReviewController::class)->prefix('review')->group(function () {
         Route::get('/', 'index');
@@ -61,6 +65,9 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/{checkpoint_id}/all', 'getReview');
         Route::get('/all-checkpoint-assgin', 'getCheckpointassgin');
         Route::get('/{checkpoint_id}/{user_id}/', 'checkListAssgin');
+    });
+    Route::controller(AvgCheckpointController::class)->prefix('avg')->group(function () {
+        Route::get('/{id}', 'getIndexAvgCheckpoint');
     });
 });
 

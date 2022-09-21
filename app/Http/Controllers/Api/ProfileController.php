@@ -46,7 +46,7 @@ class ProfileController extends Controller
         try {
             $profile->password = $data['password'];
             $profile->save();
-        }  catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->apiError('Change password error');
         }
 
@@ -64,7 +64,7 @@ class ProfileController extends Controller
     {
         try {
             if ($request['data'] && !empty($request['data'])) {
-                foreach($request['data'] as $dt) {
+                foreach ($request['data'] as $dt) {
                     $dataUpdate = [];
                     if (isset($dt['status'])) {
                         $dataUpdate['status'] = $dt['status'];
@@ -75,11 +75,10 @@ class ProfileController extends Controller
                     User::where('id', $dt['id'])->update($dataUpdate);
                 }
             }
-            
+
             return response()->apiSuccess(true);
         } catch (\Exception $e) {
             return response()->apiSuccess(false);
         }
     }
-
 }
